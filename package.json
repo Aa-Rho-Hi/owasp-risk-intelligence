@@ -1,0 +1,39 @@
+{
+  "name": "owasp-risk-intelligence",
+  "displayName": "OWASP Risk Intelligence",
+  "description": "OWASP Risk Intelligence for VS Code",
+  "version": "0.0.1",
+  "publisher": "roheeeee",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+   "activationEvents": [
+  "onCommand:owasp-risk-intelligence.scan"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "owasp-risk-intelligence.scan",
+        "title": "Scan for OWASP Risks"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "node esbuild.js --watch",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "esbuild": "^0.19.0",
+    "eslint": "^8.0.0",
+    "typescript": "^5.0.0"
+  }
+}
