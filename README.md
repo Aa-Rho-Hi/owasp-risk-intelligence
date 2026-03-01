@@ -1,71 +1,167 @@
-# owasp-risk-intelligence README
 
-This is the README for your extension "owasp-risk-intelligence". After writing up a brief description, we recommend including the following sections.
+# 🔐 OWASP Risk Intelligence for VS Code
 
-## Features
+OWASP Risk Intelligence is a lightweight static analysis extension for Visual Studio Code that detects common OWASP Top 10 vulnerabilities directly inside your editor and calculates contextual risk scores.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+This tool helps developers identify insecure coding patterns early in the Secure Software Development Lifecycle (SSDLC).
 
 ---
 
-## Following extension guidelines
+## 🚨 Supported Vulnerability Detection
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+The extension currently detects:
 
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+### 🔴 Injection Risks (OWASP A03:2021 – Injection)
+- SQL Injection
+- Cross-Site Scripting (XSS)
+- Command Injection
+- Use of `eval()`
 
-## Working with Markdown
+### 🟠 Cryptographic Failures (OWASP A02:2021)
+- Weak hash usage (MD5 / SHA1)
+- Insecure randomness (`Math.random()`)
 
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
+### 🔴 Identification & Authentication Failures (OWASP A07:2021)
+- Hardcoded secrets
 
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
+### 🟡 Insecure Configuration
+- Use of HTTP instead of HTTPS
 
-## For more information
+---
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+## 📊 Risk Scoring Model
 
-**Enjoy!**
+Each detected issue includes:
+
+- **Severity Level** (High / Medium / Low)
+- **Exploitability Score (0–10)**
+- **Impact Score (0–10)**
+- **Calculated Risk Score (0–10)**
+
+### Risk Formula
+
+Risk Score = (Exploitability × 0.6) + (Impact × 0.4)
+
+
+The extension also calculates:
+
+- 📈 Average file risk score
+- 📌 Total number of vulnerabilities detected
+
+---
+
+## 🧪 Example Vulnerable Code
+
+```js
+const query = "SELECT * FROM users WHERE id = " + req.body.id;
+document.innerHTML = req.body.comment;
+const api_key = "SECRET-123";
+exec("rm -rf " + req.body.file);
+````
+
+Detected as:
+
+* SQL Injection
+* XSS
+* Hardcoded Secret
+* Command Injection
+
+Each line is highlighted inline with a detailed hover explanation.
+
+---
+
+## ✅ Secure Code Example
+
+```js
+const query = "SELECT * FROM users WHERE id = ?";
+db.execute(query, [req.body.id]);
+
+const div = document.createElement("div");
+div.textContent = userInput;
+
+const apiKey = process.env.API_KEY;
+```
+
+No vulnerabilities detected.
+
+---
+
+## ⚙️ Features
+
+* Inline vulnerability highlighting
+* Hover-based risk explanation
+* Context-aware risk scoring
+* Average file risk summary
+* Lightweight static analysis
+* TypeScript-based VS Code extension
+
+---
+
+## 🛠 Installation (Development Mode)
+
+```bash
+git clone https://github.com/Aa-Rho-Hi/owasp-risk-intelligence.git
+cd owasp-risk-intelligence
+npm install
+npm run compile
+```
+
+Open the project in VS Code and press:
+
+```
+F5
+```
+
+Launch the Extension Development Host.
+
+Then run:
+
+```
+Scan for OWASP Risks
+```
+
+from the Command Palette.
+
+---
+
+## 🏗 Technical Architecture
+
+* TypeScript
+* VS Code Extension API
+* Regex-based static analysis engine
+* Risk scoring engine
+* Inline decoration API
+* esbuild bundler
+
+---
+
+## 🚀 Roadmap
+
+Planned future enhancements:
+
+* AST-based static analysis
+* Data-flow (source → sink) detection
+* CVSS-style scoring model
+* Sidebar risk dashboard
+* GitHub Pull Request integration
+* JSON security report export
+* Auto-fix recommendations
+
+---
+
+## 🎯 Purpose
+
+This project demonstrates:
+
+* OWASP Top 10 awareness
+* Secure SDLC integration
+* Static code analysis fundamentals
+* Risk-based vulnerability prioritization
+* Security tooling development
+
+---
+
+## 👩‍💻 Author
+
+Aarohi
+Cybersecurity & Risk enthusiast
